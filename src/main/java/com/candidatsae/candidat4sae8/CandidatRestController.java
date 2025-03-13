@@ -1,7 +1,7 @@
 package com.candidatsae.candidat4sae8;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,14 +23,14 @@ public class CandidatRestController {
 
 
 
-    @PreAuthorize("hasRole('user')")
-    @PostMapping(value = "/user")
+
+    @PostMapping
     public Candidat saveCandidat(@RequestBody Candidat candidat) {
         return candidatService.saveCandidat(candidat);
     }
 
-    @PreAuthorize("hasRole('admin')")
-    @GetMapping(value = "/admin")
+
+    @GetMapping
     public List<Candidat> getCandidats() {
         return candidatService.getAllCandidats();
     }
