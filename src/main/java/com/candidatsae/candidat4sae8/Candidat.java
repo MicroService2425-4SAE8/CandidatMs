@@ -1,8 +1,12 @@
 package com.candidatsae.candidat4sae8;
 
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 
@@ -13,6 +17,16 @@ public class Candidat {
     private String nom;
     private String prenom;
     private String email;
+    @ElementCollection
+    private Set<Integer> favoriteJobs = new HashSet<>();
+
+    public Set<Integer> getFavoriteJobs() {
+        return favoriteJobs;
+    }
+
+    public void setFavoriteJobs(Set<Integer> favoriteJobs) {
+        this.favoriteJobs = favoriteJobs;
+    }
 
     public Candidat() {
     }

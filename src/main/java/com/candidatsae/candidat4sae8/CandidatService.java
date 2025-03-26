@@ -5,12 +5,23 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CandidatService implements ICandidat {
 
     @Autowired
     private CandidatRepository candidatRepository;
+    @Autowired
+    private  JobClient jobClient;
+
+
+    public List<Job> getallJobs() {
+        return  jobClient.getJobs();
+    }
+    public Job getJobById(int id) {
+        return jobClient.getJob(id);
+    }
 
     @Override
     public Candidat saveCandidat(Candidat candidat) {
@@ -50,5 +61,17 @@ public class CandidatService implements ICandidat {
     @Override
     public List<Candidat> getAllCandidats() {
         return candidatRepository.findAll();
+    }
+
+    public List<Job> getFavoriteJobs(int candidateId) {
+        Candidat candidate = candidatRepository.findById(candidateId).get();
+        return candidate.getFavoriteJobs().stream()
+                .map(jobClient::getJob)
+                .collect(Collectors.toList());
+    }
+    public void saveFavoriteJob(int candidateId, int jobId) {
+        Candidat candidate = candidatRepository.findById(candidateId).get();
+        candidate.getFavoriteJobs().add(jobId);
+        candidatRepository.save(candidate);
     }
 }
